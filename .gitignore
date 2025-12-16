@@ -1,0 +1,33 @@
+# IDE相关文件
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# 编译产物
+target/
+**/target/
+
+# 日志文件
+logs/
+**/logs/
+*.log
+*.trace
+
+# Maven本地仓库（若项目内有）
+.m2/
+
+# 操作系统临时文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# 敏感信息文件（如配置文件，根据实际情况保留/删除）
+# 注意：若有本地配置文件（如application-local.yml），建议单独忽略
+# **/src/main/resources/application-*.yml
+# **/src/main/resources/application-*.properties
+
+# 其他临时文件
+tmp/
+temp/
