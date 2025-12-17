@@ -57,11 +57,15 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             return response.setComplete(); // setComplete()表示响应完成
         }
 
-        // TODO 一会再实现 5. 传递用户信息
-        System.out.println("userId = " + userId);
+        // 5. 传递用户信息
+        String userInfo = userId.toString();
+        // 创建新的ServerWebExchange，并设置用户信息
+        ServerWebExchange serverWebExchange = exchange.mutate()
+                .request(builder -> builder.header("user-info", userInfo))
+                .build();
 
         // 6. 放行
-        return chain.filter(exchange);
+        return chain.filter(serverWebExchange);
     }
 
     // 判断是否需要登录拦截
