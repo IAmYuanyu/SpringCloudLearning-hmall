@@ -1,5 +1,6 @@
 package com.hmall.pay.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -126,8 +127,14 @@ public class PayOrderServiceImpl extends ServiceImpl<PayOrderMapper, PayOrder> i
         return payOrder;
     }
     public PayOrder queryByBizOrderNo(Long bizOrderNo) {
-        return lambdaQuery()
-                .eq(PayOrder::getBizOrderNo, bizOrderNo)
-                .one();
+        // return lambdaQuery()
+        //         .eq(PayOrder::getBizOrderNo, bizOrderNo)
+        //         .one();
+
+        // 使用 getBaseMapper() 显式指定 mapper 来避免 Class must not be null 错误
+        LambdaQueryWrapper<PayOrder> queryWrapper =
+                new LambdaQueryWrapper<PayOrder>()
+                .eq(PayOrder::getBizOrderNo, bizOrderNo);
+        return getBaseMapper().selectOne(queryWrapper);
     }
 }
