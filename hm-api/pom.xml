@@ -42,5 +42,11 @@
             <version>3.5.5</version>
             <scope>compile</scope>
         </dependency>
+        <!-- 通用工具类 -->
+        <dependency>
+            <groupId>com.heima</groupId>
+            <artifactId>hm-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>
