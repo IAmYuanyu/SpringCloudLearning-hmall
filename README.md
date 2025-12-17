@@ -24,6 +24,7 @@ docker run -d \
   -v /root/mysql/conf:/etc/mysql/conf.d \
   -v /root/mysql/init:/docker-entrypoint-initdb.d \
   --network hm-net\
+  --restart=always \
   mysql
 ```
 
