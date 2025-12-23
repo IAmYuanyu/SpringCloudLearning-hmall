@@ -13,6 +13,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: ${hm.db.pw}
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 2           # 保持长连接
+      maximum-pool-size: 10
+      idle-timeout: 300000
+      max-lifetime: 600000
+      connection-test-query: SELECT 1
 mybatis-plus:
   configuration:
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
