@@ -14,5 +14,6 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: localhost:8090 # sentinel控制台地址
+        dashboard: 106.14.144.133:8090 # sentinel控制台地址
+        clientIp: 106.14.144.133 # 本地公网ip
       http-method-specify: true # 开启请求方式前缀

@@ -1,8 +1,8 @@
 hm:
   db:
-    host: 106.14.144.133 # 修改为你自己的虚拟机IP地址
+    host: 122.51.162.100 # 修改为你自己的虚拟机IP地址
     pw: 123 # 修改为docker中的MySQL密码
 spring:
   cloud:
     nacos:
-      server-addr: 106.14.144.133:8848
+      server-addr: 122.51.162.100:8848

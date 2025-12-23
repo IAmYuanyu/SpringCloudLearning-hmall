@@ -5,7 +5,7 @@ spring:
     active: dev
   cloud:
     nacos:
-      # server-addr: 192.168.19.129 # nacos地址
+      server-addr: 192.168.19.129 # nacos地址
       config:
         file-extension: yaml # 文件后缀名（刚刚在nacos控制台新建配置时选择的配置格式）
         shared-configs: # 共享配置
