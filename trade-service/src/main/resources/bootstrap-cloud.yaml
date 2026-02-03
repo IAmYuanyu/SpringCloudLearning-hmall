@@ -1,0 +1,4 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: 122.51.162.100 # nacos地址

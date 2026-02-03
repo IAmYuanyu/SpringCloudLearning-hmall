@@ -225,7 +225,7 @@ docker run -d \
 docker network create hm-net
 ```
 
-## 部署mysql
+## 部署Mysql
 
 将资料的mysql目录复制到服务器的/root中
 
@@ -247,7 +247,7 @@ docker run -d \
   mysql
 ~~~
 
-## 部署nacos
+## 部署Nacos
 
 在服务器的/root/nacos下创建一个custom.env文件，内容为
 
@@ -289,7 +289,11 @@ docker run -d \
   nacos/nacos-server:v2.1.0-slim
 ~~~
 
+## 部署Seata
 
+见我博客笔记：微服务保护和分布式事务
+
+博客：https://iamyuanyu.github.io/
 
 
 
