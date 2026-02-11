@@ -10,3 +10,10 @@ hm:
 feign:
   okhttp:
     enabled: true # 开启OKHttp功能
+spring:
+  rabbitmq:
+    host: 192.168.19.129 # 你的虚拟机IP
+    port: 5672 # 端口
+    virtual-host: /hmall # 虚拟主机
+    username: hmall # 用户名
+    password: 123 # 密码
