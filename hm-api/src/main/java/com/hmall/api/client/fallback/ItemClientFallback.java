@@ -28,6 +28,13 @@ public class ItemClientFallback implements FallbackFactory<ItemClient> {
                 // 库存扣减业务需要触发事务回滚，查询失败，抛出异常
                 throw new BizIllegalException(cause);
             }
+
+            @Override
+            public void restoreStock(List<OrderDetailDTO> items) {
+                log.error("远程调用ItemClient#restoreStock方法出现异常，参数：{}", items, cause);
+                // 库存恢复异常
+                throw new BizIllegalException(cause);
+            }
         };
     }
 }

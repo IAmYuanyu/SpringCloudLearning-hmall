@@ -6,6 +6,7 @@ import com.hmall.api.client.ItemClient;
 import com.hmall.api.dto.ItemDTO;
 import com.hmall.api.dto.OrderDetailDTO;
 import com.hmall.common.exception.BadRequestException;
+import com.hmall.common.utils.BeanUtils;
 import com.hmall.common.utils.UserContext;
 import com.hmall.trade.constants.MQConstants;
 import com.hmall.trade.domain.dto.OrderFormDTO;
@@ -18,6 +19,7 @@ import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -94,7 +96,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 MQConstants.DELAY_ORDER_KEY,
                 order.getId(), // 把订单id发送给mq
                 message -> { // 设置延迟多久发送这个消息
-                    message.getMessageProperties().setDelay(10000);
+                    message.getMessageProperties().setDelay(1800000);// 延迟30分钟
                     return message;
                 });
 
@@ -119,8 +121,25 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     }
 
     @Override
+    @Transactional
     public void cancelOrder(Long orderId) {
-        // TODO 标记订单为已关闭并恢复库存
+        // 标记订单为已关闭并恢复库存
+        // 标记订单为已关闭
+        lambdaUpdate()
+                .set(Order::getStatus, 5)
+                .set(Order::getUpdateTime, LocalDateTime.now())
+                .set(Order::getEndTime, LocalDateTime.now())
+                .eq(Order::getId, orderId)
+                .ne(Order::getStatus, 5) // 状态不是已关闭
+                .update();
+
+        // 恢复库存
+        // 根据订单id查询订单详情
+        List<OrderDetail> details = detailService.lambdaQuery()
+                .eq(OrderDetail::getOrderId, orderId).list();
+        List<OrderDetailDTO> orderDetailDTOS = BeanUtils.copyList(details, OrderDetailDTO.class);
+        // 恢复库存
+        itemClient.restoreStock(orderDetailDTOS);
     }
 
     private List<OrderDetail> buildDetails(Long orderId, List<ItemDTO> items, Map<Long, Integer> numMap) {
